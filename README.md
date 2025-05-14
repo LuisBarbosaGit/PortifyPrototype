@@ -1,157 +1,98 @@
-﻿# 🧱 Arquitetura do Projeto: Criador de Portfólios + Publicação no GitHub Pages
+﻿# 🚀 Projeto: Plataforma de Venda de Templates
 
-## 🎯 Objetivo
-Permitir que usuários criem seus portfólios personalizados via uma interface web e publiquem automaticamente esses portfólios no GitHub Pages.
-
----
-
-## 🔧 Tecnologias Utilizadas
-
-| Camada        | Tecnologia                          |
-|---------------|--------------------------------------|
-| Frontend      | React + Tailwind CSS                 |
-| Backend       | Firebase (Firestore + Functions)     |
-| Autenticação  | Firebase Auth + GitHub OAuth         |
-| Deploy Final  | GitHub Pages (via GitHub API)        |
-| GitHub API    | `@octokit/rest` (SDK oficial)        |
+## ✅ Etapas Gerais
 
 ---
 
-## ⚙️ Fluxo Geral do Projeto
+## 🖥️ FRONTEND (React + Vercel)g
 
-1. **Usuário acessa o app React**
-   - Interface para criar e personalizar o portfólio (formulários, templates visuais).
-2. **Dados do portfólio são salvos no Firebase Firestore**
-   - Nome, bio, projetos, redes sociais, template escolhido.
-3. **Usuário clica em "Publicar"**
-   - Inicia o processo de publicação automática no GitHub.
-4. **Firebase Function ou Backend:**
-   - Autentica com o GitHub usando OAuth.
-   - Gera dinamicamente um `index.html` com os dados do Firebase.
-   - Cria um repositório via GitHub API.
-   - Envia o arquivo para o repositório (`index.html`, `style.css`, etc).
-   - Ativa o GitHub Pages no repositório.
-5. **Retorna a URL pública ao usuário**
-   - Ex: `https://usuario.github.io/portfolio-nome`
+### 1. Estrutura inicial
+- [ ] Criar projeto React (Vite ou Create React App)
+- [ ] Criar página inicial com listagem de templates
+- [ ] Criar página de checkout com informações do pedido
+- [ ] Criar página de sucesso após o pagamento
+- [ ] Configurar deploy no Vercel
+
+### 2. Integrações
+- [ ] Buscar dados dos templates via API (GET /templates)
+- [ ] Enviar dados do pedido para a API (POST /purchase)
+- [ ] Redirecionar para Stripe Checkout
+- [ ] Após sucesso, mostrar link de download ou mensagem de confirmação
 
 ---
 
-## 📂 Estrutura de Pastas (sugestão)
+## 🔧 BACKEND (Node.js + Express + PostgreSQL via Render)
 
-```js
-portify/
-│
-├── public/                      # Arquivos públicos (favicon, manifest, etc.)
-│
-├── src/                         # Fonte principal do app React
-│   ├── assets/                  # Imagens, ícones, logos etc.
-│   ├── components/              # Componentes reutilizáveis (ex: Card, Header, Footer)
-│   ├── layouts/                 # Layouts para diferentes páginas/templates
-│   ├── pages/                   # Páginas principais do app (React Router ou Next.js)
-│   │   ├── Home.jsx
-│   │   ├── Editor.jsx
-│   │   ├── Preview.jsx
-│   │   └── Publish.jsx
-│   ├── services/                # Integrações externas
-│   │   ├── firebase.js          # Inicialização e funções Firebase
-│   │   ├── githubApi.js         # Interação com GitHub via Octokit
-│   │   └── auth.js              # Autenticação (Firebase Auth + GitHub OAuth)
-│   ├── templates/               # Templates HTML/CSS para geração dos portfólios
-│   │   ├── template1.html
-│   │   ├── template2.html
-│   │   └── ...
-│   ├── utils/                   # Funções auxiliares
-│   │   ├── generateHtml.js      # Função para gerar HTML a partir dos dados do usuário
-│   │   ├── base64.js            # Função para conversão de arquivos em base64
-│   │   └── sanitize.js          # Limpeza e validação dos dados
-│   ├── styles/                  # Tailwind config ou estilos globais
-│   └── App.jsx
-│
-├── functions/                  # Firebase Functions (backend serverless)
-│   ├── index.js                # Funções para publicar no GitHub, gerar arquivos, etc.
-│   ├── github/                 # Lógica específica para GitHub API
-│   │   ├── createRepo.js
-│   │   ├── uploadFiles.js
-│   │   └── enablePages.js
-│   └── firebase.js             # Conexão com Firestore, Auth etc.
-│
-├── .env                        # Variáveis de ambiente (ex: GitHub Client ID)
-├── .gitignore
-├── tailwind.config.js
-├── package.json
-└── README.md
-```
+### 1. Preparar ambiente local
+- [ ] Criar projeto com `npm init`
+- [ ] Instalar dependências: `express`, `pg`, `dotenv`, `stripe`, `nodemailer`, `cors`
+- [ ] Configurar variáveis de ambiente
 
-## 🗃 Exemplo de Dados no Firestore
+### 2. Configurar banco de dados no Render
+- [ ] Criar conta no [Render](https://render.com)
+- [ ] Criar instância PostgreSQL (plano gratuito)
+- [ ] Criar tabelas:
+  - `templates (id, name, price, download_url, description)`
+  - `orders (id, email, template_id, paid, created_at)`
 
-```json
-{
-  "nome": "Ana Dev",
-  "bio": "Desenvolvedora Frontend apaixonada por React.",
-  "projetos": [
-    { "titulo": "Landing Page", "link": "https://meusite.com/landing" },
-    { "titulo": "Dashboard", "link": "https://meusite.com/dashboard" }
-  ],
-  "redes": {
-    "github": "https://github.com/anadev",
-    "linkedin": "https://linkedin.com/in/anadev"
-  },
-  "template": "template1"
-}
-```
+### 3. Criar API REST
+- [ ] Rota `GET /templates` → retorna templates do banco
+- [ ] Rota `POST /purchase` → cria pedido e inicia pagamento no Stripe
+- [ ] Rota `GET /success` → recebe confirmação do pagamento
+- [ ] (Opcional) Enviar e-mail com link usando `nodemailer`
 
-```js
+### 4. Deploy no Render
+- [ ] Subir projeto no GitHub
+- [ ] Conectar o repositório no Render
+- [ ] Configurar variáveis de ambiente (DB, Stripe keys etc.)
+- [ ] Fazer o deploy automático do backend
 
-function gerarHTMLPortifolio(dados) {
-  return `
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-  <title>Portfólio de ${dados.nome}</title>
-  ...
-</head>
-<body>
-  <h1>${dados.nome}</h1>
-  <p>${dados.bio}</p>
-  ...
-</body>
-</html>
-  `.trim();
-}
-```
-## 🚀 Publicação Automática no GitHub Pages
+---
 
-### 1. Criar repositório
+## 💳 PAGAMENTO (Stripe)
 
-```js
-octokit.repos.createForAuthenticatedUser({
-  name: "meu-portifolio",
-  private: false,
-});
-```
-## 2.Subir Aquivos
+### 1. Criar conta no Stripe
+- [ ] Configurar produtos e preços (ou usar Checkout dinâmico)
+- [ ] Gerar chave pública/privada
 
-```js 
-octokit.repos.createOrUpdateFileContents({
-  owner: "usuario",
-  repo: "meu-portifolio",
-  path: "index.html",
-  message: "Adiciona index.html",
-  content: Buffer.from(html).toString("base64"),
-  branch: "main"
-});
-```
-## 3.Ativar GitHubPages
+### 2. Integração com backend
+- [ ] Criar sessão de pagamento no backend (Stripe Checkout)
+- [ ] Redirecionar o usuário do frontend para o checkout
+- [ ] Verificar sucesso do pagamento
+- [ ] Salvar pedido no banco (e enviar e-mail se quiser)
 
-```js
-octokit.repos.updateInformationAboutPagesSite({
-  owner: "usuario",
-  repo: "meu-portifolio",
-  source: {
-    branch: "main",
-    path: "/",
-  },
-});
+---
+
+## 📩 ENTREGA DE TEMPLATES
+
+### 1. Armazenamento
+- [ ] Hospedar os templates prontos em:
+  - GitHub Releases
+  - Dropbox
+  - Firebase Hosting
+
+### 2. Entrega após pagamento
+- [ ] Após o pagamento, mostrar o link direto no frontend
+- [ ] Ou enviar o link por e-mail com `nodemailer`
+
+---
+
+## ✅ Manutenção e Segurança
+
+- [ ] Usar CORS no backend para permitir acesso apenas do frontend
+- [ ] Validar pagamentos antes de liberar downloads
+- [ ] Tratar erros do Stripe e banco
+- [ ] Logar atividades básicas para análise futura
+
+---
+
+## 📁 Extras futuros (opcional)
+
+- [ ] Tela de login (JWT)
+- [ ] Painel para ver pedidos
+- [ ] Página de checkout customizada
+- [ ] Upload de novos templates via painel admin
+
 ```
 
 
