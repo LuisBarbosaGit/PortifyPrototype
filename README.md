@@ -1,98 +1,127 @@
-﻿# 🚀 Projeto: Plataforma de Venda de Templates
+﻿# 🚀 Backend com Node.js + Express + Firebase (Firestore)
 
-## ✅ Etapas Gerais
-
----
-
-## 🖥️ FRONTEND (React + Vercel)g
-
-### 1. Estrutura inicial
-- [ ] Criar projeto React (Vite ou Create React App)
-- [ ] Criar página inicial com listagem de templates
-- [ ] Criar página de checkout com informações do pedido
-- [ ] Criar página de sucesso após o pagamento
-- [ ] Configurar deploy no Vercel
-
-### 2. Integrações
-- [ ] Buscar dados dos templates via API (GET /templates)
-- [ ] Enviar dados do pedido para a API (POST /purchase)
-- [ ] Redirecionar para Stripe Checkout
-- [ ] Após sucesso, mostrar link de download ou mensagem de confirmação
+Este plano descreve como criar uma API backend separada usando Node.js com Express, integrada ao Firebase Firestore.
 
 ---
 
-## 🔧 BACKEND (Node.js + Express + PostgreSQL via Render)
+## ✅ Etapas do Projeto
 
-### 1. Preparar ambiente local
-- [ ] Criar projeto com `npm init`
-- [ ] Instalar dependências: `express`, `pg`, `dotenv`, `stripe`, `nodemailer`, `cors`
-- [ ] Configurar variáveis de ambiente
-
-### 2. Configurar banco de dados no Render
-- [ ] Criar conta no [Render](https://render.com)
-- [ ] Criar instância PostgreSQL (plano gratuito)
-- [ ] Criar tabelas:
-  - `templates (id, name, price, download_url, description)`
-  - `orders (id, email, template_id, paid, created_at)`
-
-### 3. Criar API REST
-- [ ] Rota `GET /templates` → retorna templates do banco
-- [ ] Rota `POST /purchase` → cria pedido e inicia pagamento no Stripe
-- [ ] Rota `GET /success` → recebe confirmação do pagamento
-- [ ] (Opcional) Enviar e-mail com link usando `nodemailer`
-
-### 4. Deploy no Render
-- [ ] Subir projeto no GitHub
-- [ ] Conectar o repositório no Render
-- [ ] Configurar variáveis de ambiente (DB, Stripe keys etc.)
-- [ ] Fazer o deploy automático do backend
-
----
-
-## 💳 PAGAMENTO (Stripe)
-
-### 1. Criar conta no Stripe
-- [ ] Configurar produtos e preços (ou usar Checkout dinâmico)
-- [ ] Gerar chave pública/privada
-
-### 2. Integração com backend
-- [ ] Criar sessão de pagamento no backend (Stripe Checkout)
-- [ ] Redirecionar o usuário do frontend para o checkout
-- [ ] Verificar sucesso do pagamento
-- [ ] Salvar pedido no banco (e enviar e-mail se quiser)
-
----
-
-## 📩 ENTREGA DE TEMPLATES
-
-### 1. Armazenamento
-- [ ] Hospedar os templates prontos em:
-  - GitHub Releases
-  - Dropbox
-  - Firebase Hosting
-
-### 2. Entrega após pagamento
-- [ ] Após o pagamento, mostrar o link direto no frontend
-- [ ] Ou enviar o link por e-mail com `nodemailer`
-
----
-
-## ✅ Manutenção e Segurança
-
-- [ ] Usar CORS no backend para permitir acesso apenas do frontend
-- [ ] Validar pagamentos antes de liberar downloads
-- [ ] Tratar erros do Stripe e banco
-- [ ] Logar atividades básicas para análise futura
-
----
-
-## 📁 Extras futuros (opcional)
-
-- [ ] Tela de login (JWT)
-- [ ] Painel para ver pedidos
-- [ ] Página de checkout customizada
-- [ ] Upload de novos templates via painel admin
-
+### 1. Inicializar o Projeto Node.js
+```bash
+mkdir backend
+cd backend
+npm init -y
+npm install express cors dotenv firebase-admin
 ```
+
+---
+
+### 2. Estrutura de Pastas
+```
+backend/
+├── src/
+│   ├── routes/
+│   ├── controllers/
+│   ├── services/
+│   ├── config/
+│   └── index.js
+├── .env
+├── package.json
+```
+
+---
+
+### 3. Configurar Firebase Admin SDK
+1. No Firebase Console: **Configurações > Contas de serviço**
+2. Gere uma **chave privada (JSON)** e coloque em `backend/firebaseKey.json`
+
+```js
+// src/config/firebase.js
+const admin = require('firebase-admin');
+const serviceAccount = require('../../firebaseKey.json');
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount)
+});
+
+const db = admin.firestore();
+module.exports = { admin, db };
+```
+
+---
+
+### 4. Criar o Servidor Express
+```js
+// src/index.js
+const express = require('express');
+const cors = require('cors');
+require('dotenv').config();
+
+const app = express();
+app.use(cors());
+app.use(express.json());
+
+const templateRoutes = require('./routes/templates');
+app.use('/api/templates', templateRoutes);
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+```
+
+---
+
+### 5. Criar Rotas e Controladores
+```js
+// src/routes/templates.js
+const express = require('express');
+const router = express.Router();
+const { getTemplates } = require('../controllers/templateController');
+
+router.get('/', getTemplates);
+module.exports = router;
+```
+
+```js
+// src/controllers/templateController.js
+const { db } = require('../config/firebase');
+
+exports.getTemplates = async (req, res) => {
+  try {
+    const snapshot = await db.collection('templates').get();
+    const templates = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    res.json(templates);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+```
+
+---
+
+### 6. Testar Localmente
+```bash
+node src/index.js
+```
+Acesse: `http://localhost:3000/api/templates`
+
+---
+
+### 7. Deploy no Render
+- Crie um repositório no GitHub
+- Suba o código
+- Acesse [Render.com](https://render.com/)
+- Crie um novo serviço Web apontando para o repositório
+- Configurações:
+  - **Start command:** `node src/index.js`
+  - **Env vars:** adicione `PORT`, configs do Firebase, etc.
+
+---
+
+### 8. Futuras Melhorias
+- Validação de dados
+- Autenticação (Firebase Auth)
+- Integração com gateways de pagamento
+
+---
 
 

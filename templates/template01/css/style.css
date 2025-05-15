@@ -1,0 +1,108 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+body{
+    background-color: oklch(98.5% 0.001 106.423);
+}
+
+/* Estilização do Head */
+#head{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
+#head_user{
+    display: flex;
+    justify-content: space-around;
+    gap: 60%;
+    height: 50px;
+    align-items: center; 
+    padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+     
+}
+
+#head_button{
+    width: 130px;
+    height: 50px;
+    border: 3px solid oklch(51.8% 0.253 323.949);
+    border-radius: 30px;
+    color: oklch(51.8% 0.253 323.949);
+    background-color: white;
+    font-size: 1.2em;
+    text-align: center;
+    line-height: 40px;
+}
+#head_button:hover{
+    cursor: pointer;
+    border: 3px solid oklch(74% 0.238 322.16);
+    color: oklch(74% 0.238 322.16);
+}
+
+#head_icon i{
+    font-size: 2.9em;
+    color: rgb(0, 0, 0);
+}
+
+#head_icon i:hover{
+    cursor: pointer;
+    transform: scale(1.1);
+    transition: all 0.3s ease-in;
+}
+
+#icon-text{
+    font-size: 0.4em;
+    font-family: 'Raleway';
+}
+
+/* Estilização do Main */
+#title{
+    padding-top: 60px;
+    border: 1px solid red;
+    opacity: 0;
+    width: 90%;
+    margin: 70px auto;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+    height: 600px;
+    transform: translateY(50px);
+    transition: opacity 0.7s ease-in, transform 2.2s ease-in-out;  
+}
+#title.show{
+    opacity: 1;
+    transform: translateY(0px);
+}
+
+#main-title{
+    font-family: 'Rubik';
+    font-size: 4em;
+    font-weight: 600;
+    color: oklch(20.8% 0.042 265.755);
+}
+
+#CargoSpan{
+    background: linear-gradient(90deg, oklch(66.7% 0.295 322.15), oklch(43.2% 0.232 292.759));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+#description{
+    font-family: 'Raleway';
+    margin: 5px;
+    font-size: 1.6em;
+    color: oklch(44.6% 0.03 256.802);
+}
+
+#user-image img{
+    width: 170px;
+    height: 170px;
+    border-radius: 50%;
+    margin-top: 20px;
+    border: 1px solid  black
+}

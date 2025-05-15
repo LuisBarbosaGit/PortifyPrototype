@@ -6,10 +6,16 @@
 
     <!-- Importação do style -->
      <link rel="stylesheet" href="css/style.css">
-    <!-- Importação das fontes -->
 
-    <!-- Importação do BoxIcons > Para utilizar class='bx bx-<Icon> -->
-    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <script src="script.js"></script>
+    <!-- Importação das fontes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cal+Sans&family=Cascadia+Code:ital,wght@0,200..700;1,200..700&family=Rubik:ital,wght@0,300..900;1,300..900&family=Special+Gothic&family=Special+Gothic+Expanded+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+    <!-- Importação dos icones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
     <!-- Importação do DevIcons > Para utilizar class="devicon-html5-plain colored" -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
@@ -18,27 +24,49 @@
 </head>
 <body>
     <!-- Menu de Apresentação -->
-    <aside>
-        <div id="usuarioIcon">
-            <img src="" alt="UserIcon">
+    <header id="head" >
+        <div id="head_user">
+            <div id="head_icon">
+                <a href="https://github.com/LuisBarbosaGit?tab=repositories">
+                    <i class="fa-brands fa-github"><span id="icon-text">Portfolio</span></i>
+                </a>
+            </div>
+            <button id="head_button">Diga Olá</button>
         </div>
-        <h1 id="tituloCargo"> Desenvolvedor <span id="CargoSpan">FullStack</span></h1>
-        <div id="resumo">
-            <p></p>
-        </div>
-        <div id="redes-sociais">
-
-        </div>
-    </aside>
+    </header>
     <!-- Menu de Principal -->
     <main>
-        <div id="descricao">
-
+        <div id="title">
+            <h1 id="main-title"> Desenvolvedor <span id="CargoSpan">FullStack</span></h1>
+            <h2 id="description">Integro tecnologia e design para entregar aplicações web completas e funcionais.</h2>
+            <div id="user-image">
+                <img src="https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_640.png" alt="UserImage">
+            </div>
         </div>
-        <div id="portifolio">
-
+        <div id="tecnologias">
+            <h1 id="main-title">Tecnologias</h1>
+            <div id="tec-cards">
+                <h1 id="tec-tittle">Languages</h1>
+                    <div id="tec-itens">   
+                        <i class="devicon-react-original colored"></i>
+                    </div>
+            </div>
+            <div id="tec-cards">
+                <h1 id="tec-tittle">Frameworks</h1>
+                    <div id="tec-itens">   
+                        <i class="devicon-react-original-wordmark colored"></i>
+                    </div>
+            </div>
+            <div id="tec-cards">
+                <h1 id="tec-tittle">Databases</h1>
+                    <div id="tec-itens">   
+                    <i class="devicon-react-original colored"></i>
+                    </div>
+            </div>
+        </div>
+        <div id="redes-sociais">
+            
         </div>
     </main>
-    
 </body>
 </html>
