@@ -8,6 +8,9 @@ body{
 
 /* Estilização do Head */
 
+#head{
+    height: 20dvh;
+}
 #head_user{
     display: flex;
     justify-content: space-around;
@@ -59,7 +62,6 @@ body{
 
 /* Estilização do Main */
 #title{
-    border: 1px solid red;
     opacity: 0;
     margin: 0px auto;
     width: 90%;
@@ -68,7 +70,7 @@ body{
     flex-direction: column;
     justify-content: center;
     gap: 10px;
-    height: 700px;
+    height: 80dvh;
     transform: translateY(60px);
     transition: opacity 0.7s ease-in, transform 2.3s ease-in-out;  
 }
