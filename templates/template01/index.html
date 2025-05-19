@@ -13,6 +13,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cal+Sans&family=Cascadia+Code:ital,wght@0,200..700;1,200..700&family=Rubik:ital,wght@0,300..900;1,300..900&family=Special+Gothic&family=Special+Gothic+Expanded+One&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 
     <!-- Importação dos icones -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -28,11 +29,12 @@
         <div id="head_user">
             <div id="head_icon">
                 <a href="https://github.com/LuisBarbosaGit?tab=repositories">
-                    <i class="fa-brands fa-github"><span id="icon-text">Portfolio</span></i>
+                    <i class="fa-brands fa-github"></i>
+                    <span id="icon-text">Portfolio</span>
                 </a>
             </div>
             <div id="button-ola">
-                <button id="head_button">Diga Olá</button>
+                <button onclick="message()" id="head_button">Diga Olá</button>
             </div>
         </div>
     </header>
@@ -44,32 +46,43 @@
             <div id="user-image">
                 <img src="https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_640.png" alt="UserImage">
             </div>
+            <button id="scroll"><i class="fa-solid fa-play fa-rotate-90"></i></i></button>
         </div>
-        <div id="tecnologias">
-            <h1 id="main-title">Tecnologias</h1>
             <div id="tec-container">
-            <div id="tec-cards">
-                <h1 id="tec-tittle">Languages</h1>
-                    <div id="tec-itens">   
-                        <i class="devicon-react-original colored"></i>
-                    </div>
-            </div>
-            <div id="tec-cards">
-                <h1 id="tec-tittle">Frameworks</h1>
-                    <div id="tec-itens">   
-                        <i class="devicon-react-original-wordmark colored"></i>
-                    </div>
-            </div>
-            <div id="tec-cards">
-                <h1 id="tec-tittle">Databases</h1>
-                    <div id="tec-itens">   
-                    <i class="devicon-react-original colored"></i>
-                    </div>
-            </div>
-        </div>
+                <h1 id="main-tec-tittle">Skills:</h1>
+                <div id="tec-cards">
+                    <h1 id="tec-tittle">Languages:</h1>
+                        <div id="tec-itens">   
+                            <i class="devicon-javascript-plain colored"></i>
+                            <i class="devicon-typescript-plain colored"></i>
+                            <i class="devicon-python-plain colored"></i>
+                        </div>
+                </div>
+                <div id="tec-cards">
+                    <h1 id="tec-tittle">Frameworks:</h1>
+                        <div id="tec-itens">   
+                            <i class="devicon-react-original-wordmark colored"></i>
+                            <i class="devicon-nextjs-original-wordmark colored"></i>
+                            <i class="devicon-nodejs-plain-wordmark colored"></i>
+                            <i class="devicon-tailwindcss-original colored"></i>
+                        </div>
+                </div>
+                <div id="tec-cards">
+                    <h1 id="tec-tittle">Databases:</h1>
+                        <div id="tec-itens">   
+                        <i class="devicon-postgresql-plain-wordmark colored"></i>
+                        <i class="devicon-mysql-plain-wordmark colored"></i>
+                        </div>
+                </div>
+                <h1 id="main-tec-tittle">Projects:</h1>
         </div>
         <div id="redes-sociais">
-            
+            <h2>Contato:</h2>
+            <div id="redes">
+                <a href=""><i class="fa-brands fa-linkedin" style="color: #0d31e3;"></i></a>
+                <a href=""><i class="fa-solid fa-envelope" style="color: #861fdb;"></i></a>
+            </div>
+            <h3 id="direitos">© 2025 Luis Barbosa. Todos os direitos reservados.</h3>
         </div>
     </main>
 </body>
